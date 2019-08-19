@@ -4,9 +4,18 @@ let cors = require("cors");
 const port = process.env.PORT || 3001;
 const bodyParser = require("body-parser");
 
+const staticServe = express.static(path.join(__dirname, "../client/build"));
+
+
+
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+
+
+app.use("/", staticServe);
+app.use("*", staticServe);
 
 app.get("/api", (req, res) => {
   res.send({
@@ -14,11 +23,11 @@ app.get("/api", (req, res) => {
   });
 });
 
-app.get("/", (req, res) => {
-  res.send({
-    name: "root"
-  });
-});
+// app.get("/", (req, res) => {
+//   res.send({
+//     name: "root"
+//   });
+// });
 
 app.post("/api/add",(req,res)=>{
     const {body:{message}} = req;
