@@ -20,6 +20,11 @@ app.get("/", (req, res) => {
   });
 });
 
+app.post("/api/add",(req,res)=>{
+    const {body:{message}} = req;
+    res.send(message+' hi hello');
+});
+
 app.listen(port, function() {
   console.log("running : " + port);
 });
