@@ -3,7 +3,7 @@ const app = express();
 let cors = require("cors");
 const port = process.env.PORT || 3001;
 const bodyParser = require("body-parser");
-
+const path = require('path');
 const staticServe = express.static(path.join(__dirname, "../client/build"));
 
 
