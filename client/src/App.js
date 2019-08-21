@@ -1,32 +1,42 @@
-import React from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
-import Header from './components/header';
+import Header from './components/header/header';
 
 import './App.css';
 
-function App() {
-  axios.get('https://dry-basin-81233.herokuapp.com/api')
-  .then(res=>console.log(res));
 
-  let payload={
-    message:'test'
+class App extends Component {
+
+  componentDidMount(){
+    axios.get('http://localhost:3001/api')
+    .then(res=>console.log(res.data.collection));
+  
+    let payload={
+      message:'test'
+    }
+  
+    axios.post('http://localhost:3001/api/add', payload)
+    .then(res=> this.setState({messageRef:res.data}));
   }
 
-  axios.post('https://dry-basin-81233.herokuapp.com/api/add', payload)
-  .then(res=>console.log('post: '+res.data));
-
-
-  // axios.post('http://localhost:3001/api/add', payload)
-  // .then(res=>console.log(res));
-
-  // axios.get('http://localhost:3001/api')
-  //  .then(res=>console.log(res));
-  return (
-    <div className="App">
-    
-     <Header />
-    </div>
-  );
+  constructor(props) {
+    super(props);
+    this.state = { 
+      messageRef:'',
+     }
+  }
+  render() { 
+    return ( 
+      <div className="App">
+      
+      <Header />
+     
+     </div>
+     );
+  }
 }
-
+ 
 export default App;
+
+
+
