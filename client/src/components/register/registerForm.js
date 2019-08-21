@@ -6,13 +6,27 @@ import {
   Row,
   Col,
   InputGroup,
-  FormControl
+  FormControl,
+  Image
 } from "react-bootstrap";
+
+import axios from 'axios';
+
+import ImageUpload from "./imageUpload";
 
 class RegisterForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      imageUpload:false,
+      avatar_url:null,
+    };
+   
+    this.openImageUpload = this.openImageUpload.bind(this);
+    this.hideImageUpload  = this.hideImageUpload.bind(this);
+    this.updateAvatarUrl  = this.updateAvatarUrl.bind(this);
+    
+    
   }
   render() {
     return (
@@ -29,7 +43,11 @@ class RegisterForm extends Component {
               <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
                   Register Form
+                  
+                  <Image  onClick={this.openImageUpload} style={{height:'60px',width:'60px',marginLeft:'3%',cursor:'pointer'}} src={ this.state.avatar_url === null ? require('../../assets/images/avatarUpload.png') : `http://localhost:3001/uploads/${this.state.avatar_url}`}  roundedCircle />
+                  <ImageUpload setUrl= {this.updateAvatarUrl} show={this.state.imageUpload} onHide={this.hideImageUpload}/>
                 </Modal.Title>
+                
               </Modal.Header>
             </Col>
           </Row>
@@ -147,7 +165,7 @@ class RegisterForm extends Component {
                 border: "1px solid rgb(191, 159, 237)",
                 fontFamily: "Quicksand, sans-serif"
               }}
-              onClick={this.props.onHide}
+              onClick={(e)=>{ this.props.onHide(); this.postData();}}
             >
               Register
             </Button>
@@ -156,6 +174,40 @@ class RegisterForm extends Component {
       </Modal>
     );
   }
+
+  openImageUpload() {
+    this.setState({ imageUpload: true });
+    
+  }
+
+  hideImageUpload(){
+    this.setState({ imageUpload: false });
+  }
+
+  updateAvatarUrl(value){
+   
+      this.setState({ avatar_url: value });
+   
+  }
+
+ postData(){
+  axios.get('http://localhost:3001/api')
+  .then(res=>{
+
+    let payload={
+      first_name:'testRef14',
+      last_name:'testRef14',
+      email:'testRef14@g.com',
+      username:'testRef14',
+      avatar_url: this.state.avatar_url,
+    }
+  
+    axios.post('http://localhost:3001/api/add', payload)
+    .then(res=> console.log(res));
+
+  });
+ }
+
 }
 
 export default RegisterForm;
