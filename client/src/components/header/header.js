@@ -10,6 +10,7 @@ class Header extends Component {
       registerForm: false,
       loginForm:false,
     };
+    
     this.openRegisterDialog = this.openRegisterDialog.bind(this);
     this.openLoginDialog = this.openLoginDialog.bind(this);
     this.hideDialog = this.hideDialog.bind(this);
@@ -23,7 +24,7 @@ class Header extends Component {
         <Navbar
           expand="lg"
           style={{
-            boxShadow: "0px 0px 7px rgba(203, 174, 235,1)",
+            boxShadow: "0px 0px 4px rgba(203, 174, 235,1)",
             backgroundColor: "rgba(238, 235, 242,0.3)"
           }}
         >
