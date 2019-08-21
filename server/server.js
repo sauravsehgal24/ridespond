@@ -4,9 +4,9 @@ let cors = require("cors");
 const port = process.env.PORT || 3001;
 const bodyParser = require("body-parser");
 const path = require('path');
-
-
-
+const getSqlConnection = require('./database/config/connectionPool');
+const Promise = require('bluebird');
+const User = require('./models/User')
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -16,15 +16,19 @@ app.use(cors());
 
 
 app.get("/api", (req, res) => {
-  res.send({
-    name: "hi"
-  });
+  return User.findAll()
+      .then(collection =>
+        res.json({
+          collection,
+        }))
 });
 
 app.get("/", (req, res) => {
-  res.send({
-    name: "root"
-  });
+  // res.send({
+  //   name: "root"
+  // });
+  
+
 });
 
 app.post("/api/add",(req,res)=>{

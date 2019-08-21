@@ -4,7 +4,7 @@ import {
   Button,
   Container,
   Row,
-  Col,
+  Col, 
   InputGroup,
   FormControl
 } from "react-bootstrap";
